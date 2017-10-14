@@ -88,9 +88,11 @@ public class GameManager : Singleton<GameManager> {
 
 
 		// Rotate the charactor direction
+        /*
 		float playerDirection = player_loc.trueHeading;
 		Vector3 controllerRotation = new Vector3 (Mathf.Cos (playerDirection * Mathf.PI / 180.0f), 1, Mathf.Sin (playerDirection * Mathf.PI / 180.0f));
 		player.transform.Rotate (controllerRotation);
+        */
 
 
         // Following code loads map of neighboring regions so the map appears continuous
