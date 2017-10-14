@@ -15,6 +15,9 @@ public class GameManager : Singleton<GameManager> {
 	public GeoPoint playerGeoPosition;
 	public PlayerLocationService player_loc;
 
+	public Vector3 lastPosition;
+	public float distance;
+
 	public enum PlayerStatus { TiedToDevice, FreeFromDevice }
 
 	private PlayerStatus _playerStatus;
@@ -33,6 +36,7 @@ public class GameManager : Singleton<GameManager> {
 		newMap.GetComponent<MeshRenderer>().enabled = false;
 		newMap.SetActive (false);
 
+
 	}
 
 	public GoogleStaticMap getMainMapMap () {
@@ -44,6 +48,7 @@ public class GameManager : Singleton<GameManager> {
 	}
 
 	IEnumerator Start () {
+
 
 		getMainMapMap ().initialize ();
 		yield return StartCoroutine (player_loc._StartLocationService ());
@@ -65,6 +70,9 @@ public class GameManager : Singleton<GameManager> {
 		foreach (GameObject obj in objectsOnMap) {
 			obj.GetComponent<ObjectPosition> ().setPositionOnMap ();
 		}
+
+		lastPosition = player.transform.position;
+		distance = 0.0f;
     }
 
     void Update () {
@@ -90,7 +98,10 @@ public class GameManager : Singleton<GameManager> {
 		Vector3 controllerRotation = new Vector3 (Mathf.Cos (playerDirection * Mathf.PI / 180.0f), 1, Mathf.Sin (playerDirection * Mathf.PI / 180.0f));
 		player.transform.rotation = Quaternion.Euler (controllerRotation);
 
-        /*
+		// Calculate the distance
+		float dis = Vector3.Distance(player.transform.position, lastPosition);
+		distance += dis;
+		lastPosition = player.transform.position;
 
 		var tileCenterMercator = getMainMapMap ().tileCenterMercator (playerGeoPosition);
 		if(!getMainMapMap ().centerMercator.isEqual(tileCenterMercator)) {
@@ -119,7 +130,6 @@ public class GameManager : Singleton<GameManager> {
 			newMap.GetComponent<MeshRenderer>().enabled = false;
 			newMap.SetActive(false);
 		}
-        */
 	}
 
 	public Vector3 ScreenPointToMapPosition(Vector2 point){
