@@ -83,7 +83,9 @@ public class GameManager : Singleton<GameManager> {
 			playerGeoPosition = getMainMapMap ().getPositionOnMap(new Vector2(player.transform.position.x, player.transform.position.z));
 		}
 
-
+        // Following code loads map of neighboring regions so the map appears continuous
+        // even though in reality, a map only covers a small surface area
+        /*
 		var tileCenterMercator = getMainMapMap ().tileCenterMercator (playerGeoPosition);
 		if(!getMainMapMap ().centerMercator.isEqual(tileCenterMercator)) {
 
@@ -110,6 +112,7 @@ public class GameManager : Singleton<GameManager> {
 			newMap.GetComponent<MeshRenderer>().enabled = false;
 			newMap.SetActive(false);
 		}
+        */
 	}
 
 	public Vector3? ScreenPointToMapPosition(Vector2 point){

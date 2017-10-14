@@ -20,11 +20,14 @@ public class SimpleController : MonoBehaviour
 		moveDirection = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
 		moveDirection = transform.TransformDirection(moveDirection);
 		moveDirection *= speed;
-		
 
-		// Move Character Controller
-		if(moveDirection.magnitude > 0.001)
-			controller.Move(moveDirection * Time.deltaTime);
+
+        // Move Character Controller
+        if (moveDirection.magnitude > 0.001)
+        {
+            controller.Move(moveDirection * Time.deltaTime);
+        }
+
 
 	}
 }
