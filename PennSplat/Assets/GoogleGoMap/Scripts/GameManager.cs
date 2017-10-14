@@ -10,6 +10,7 @@ public class GameManager : Singleton<GameManager> {
 	public GameObject mainMap;
 	public GameObject newMap;
 
+
 	public GameObject player;
 	public GeoPoint playerGeoPosition;
 	public PlayerLocationService player_loc;
@@ -84,6 +85,11 @@ public class GameManager : Singleton<GameManager> {
 		}
 
 
+		// Rotate the charactor direction
+		float playerDirection = player_loc.trueHeading;
+		Vector3 controllerRotation = new Vector3 (Mathf.Cos (playerDirection * Mathf.PI / 180.0f), 1, Mathf.Sin (playerDirection * Mathf.PI / 180.0f));
+		player.transform.Rotate (controllerRotation);
+
 		var tileCenterMercator = getMainMapMap ().tileCenterMercator (playerGeoPosition);
 		if(!getMainMapMap ().centerMercator.isEqual(tileCenterMercator)) {
 
@@ -100,6 +106,7 @@ public class GameManager : Singleton<GameManager> {
 			Vector2 tempPosition = GameManager.Instance.getMainMapMap ().getPositionOnMap (getNewMapMap ().centerLatLon);
 			newMap.transform.position = new Vector3 (tempPosition.x, 0, tempPosition.y);
 
+
 			GameObject temp = newMap;
 			newMap = mainMap;
 			mainMap = temp;
@@ -112,7 +119,7 @@ public class GameManager : Singleton<GameManager> {
 		}
 	}
 
-	public Vector3? ScreenPointToMapPosition(Vector2 point){
+	public Vector3 ScreenPointToMapPosition(Vector2 point){
 		var ray = Camera.main.ScreenPointToRay(point);
 		//RaycastHit hit;
 		// create a plane at 0,0,0 whose normal points to +Y:
