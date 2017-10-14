@@ -84,20 +84,14 @@ public class GameManager : Singleton<GameManager> {
 			playerGeoPosition = getMainMapMap ().getPositionOnMap(new Vector2(player.transform.position.x, player.transform.position.z));
 		}
 
-       
-
 
 		// Rotate the charactor direction
-        /*
 		float playerDirection = player_loc.trueHeading;
 		Vector3 controllerRotation = new Vector3 (Mathf.Cos (playerDirection * Mathf.PI / 180.0f), 1, Mathf.Sin (playerDirection * Mathf.PI / 180.0f));
-		player.transform.Rotate (controllerRotation);
-        */
+		player.transform.rotation = Quaternion.Euler (controllerRotation);
 
-
-        // Following code loads map of neighboring regions so the map appears continuous
-        // even though in reality, a map only covers a small surface area
         /*
+
 		var tileCenterMercator = getMainMapMap ().tileCenterMercator (playerGeoPosition);
 		if(!getMainMapMap ().centerMercator.isEqual(tileCenterMercator)) {
 
@@ -126,17 +120,17 @@ public class GameManager : Singleton<GameManager> {
 			newMap.SetActive(false);
 		}
         */
-    }
+	}
 
-    public Vector3 ScreenPointToMapPosition(Vector2 point){
+	public Vector3 ScreenPointToMapPosition(Vector2 point){
 		var ray = Camera.main.ScreenPointToRay(point);
 		//RaycastHit hit;
 		// create a plane at 0,0,0 whose normal points to +Y:
 		Plane hPlane = new Plane(Vector3.up, Vector3.zero);
 		float distance = 0; 
 		if (!hPlane.Raycast (ray, out distance)) {
-            // get the hit point:
-            return new Vector3(0, 0, 0); // null;
+			// get the hit point:
+			return new Vector3(0, 0, 0);
 		}
 		Vector3 location = ray.GetPoint (distance);
 		return location;
