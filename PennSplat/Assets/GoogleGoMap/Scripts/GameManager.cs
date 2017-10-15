@@ -91,7 +91,7 @@ public class GameManager : Singleton<GameManager> {
 		//playerPositions.Add (lastPosition);
 
 		distance = 0.0f;
-		timeLeft = 10.0f;
+		timeLeft = 20.0f;
 		time = 0.0f;
 		trueHeadingText.text = "";
 		distanceText.text = "";

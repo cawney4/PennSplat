@@ -13,11 +13,16 @@ public class TrailRender : MonoBehaviour {
 	void Start () {
 		
 		positions = new List<Vector3> ();
-	}
+        character = null;
+    }
 	
 	// Update is called once per frame
 	void Update () {
-		positions = character.positions;
+        if(character == null)
+        {
+            character = (SimpleController)FindObjectOfType(typeof(SimpleController));
+        }
+        positions = character.positions;
 		Vector3[] pos = new Vector3[positions.Count];
 		for (int i = 0; i < positions.Count; i++) {
 			pos [i] = new Vector3 (positions [i].x, 1, positions [i].z);
