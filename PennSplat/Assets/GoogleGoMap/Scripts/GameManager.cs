@@ -78,8 +78,10 @@ public class GameManager : Singleton<GameManager> {
 
 		lastPosition = player.transform.position;
 		distance = 0.0f;
+		time = 0.0f;
 		trueHeadingText.text = "";
 		distanceText.text = "";
+
     }
 
     void Update () {
@@ -111,6 +113,8 @@ public class GameManager : Singleton<GameManager> {
 		distance += dis;
 		lastPosition = player.transform.position;
 		distanceText.text = distance.ToString();
+
+		time += Time.deltaTime;
 
 		var tileCenterMercator = getMainMapMap ().tileCenterMercator (playerGeoPosition);
 		if(!getMainMapMap ().centerMercator.isEqual(tileCenterMercator)) {
