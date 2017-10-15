@@ -17,6 +17,8 @@ Features Implemented:
 - Game timer of 20 seconds per game  
 - Calculate percentage of image that is covered with player color  
 
+![Alt text](https://github.com/cawney4/PennSplat/blob/master/Video/screenshot1.PNG "Game Screenshot")
+
 Struggles:  
 We had problems accessing the GPS coordinates of the device while also using Unity's Network Manager. The GPS location works when all the networking code is removed and a single player can move around with a colored trail. However, once the networking is added, the GPS location fails to update. Thus, we implemented buttons for movement.
 
