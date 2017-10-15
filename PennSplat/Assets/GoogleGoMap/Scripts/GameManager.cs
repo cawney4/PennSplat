@@ -20,7 +20,7 @@ public class GameManager : Singleton<GameManager> {
 	public bool hasScreenShot;
 
 	public Vector3 lastPosition;
-	public List<Vector3> playerPositions;
+	//public List<Vector3> playerPositions;
 	public float distance;
 
 	public Text trueHeadingText;
@@ -87,8 +87,8 @@ public class GameManager : Singleton<GameManager> {
 
 		lastPosition = player.transform.position;
 
-		playerPositions = new List<Vector3> ();
-		playerPositions.Add (lastPosition);
+		//playerPositions = new List<Vector3> ();
+		//playerPositions.Add (lastPosition);
 
 		distance = 0.0f;
 		timeLeft = 10.0f;
@@ -133,9 +133,11 @@ public class GameManager : Singleton<GameManager> {
 			time += Time.deltaTime;
 			score = (int)distance;
 
+			/*
 			if (player.transform.position != lastPosition) {
 				playerPositions.Add (player.transform.position);
 			}
+			*/
 
 			float dis = Vector3.Distance(player.transform.position, lastPosition);
 			distance += dis;
