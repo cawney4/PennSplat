@@ -14,11 +14,13 @@ public class ScreenShotHandler : MonoBehaviour{
 		score = 0;
 		text = null;
 		scoreText.text = "0";
-        player = (GameObject)FindObjectOfType(typeof(CharacterController));
+        
 	}
 
 	public void calResult() {
-		RenderTexture tmp = RenderTexture.GetTemporary (text.width,
+        player = GameObject.FindGameObjectWithTag("Player");
+
+        RenderTexture tmp = RenderTexture.GetTemporary (text.width,
 			                    text.height, 0, RenderTextureFormat.Default, RenderTextureReadWrite.Linear);
 		Graphics.Blit (text, tmp);
 		RenderTexture previous = RenderTexture.active;
@@ -57,7 +59,10 @@ public class ScreenShotHandler : MonoBehaviour{
 
 			text = (Texture2D)Resources.Load (path);
 
-			calResult ();
+            if(text != null)
+            {
+                calResult();
+            }
 		}
 	}
 }
