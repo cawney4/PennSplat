@@ -9,11 +9,13 @@ public class NetworkCustom : NetworkManager
     private int group1 = 0;
     private int group2 = 0;
 
+    /*
     //subclass for sending network messages
     public class NetworkMessage : MessageBase
     {
         public int chosenClass;
     }
+    */
 
     public override void OnServerAddPlayer(NetworkConnection conn, short playerControllerId, NetworkReader extraMessageReader)
     {
@@ -30,13 +32,14 @@ public class NetworkCustom : NetworkManager
         {
             Debug.Log("Add orange");
             player = Instantiate(characters[1], new Vector3(10, 0, 0), Quaternion.identity) as GameObject;
-            group2++;
+            player.GetComponent<Renderer>().material.color = Color.blue;
+            group2 = group2 + 1;
         }
         else
         {
             Debug.Log("Add purple");
             player = Instantiate(characters[0], Vector3.zero, Quaternion.identity) as GameObject;
-            group1++;
+            group1 = group1 + 1;
 
         }
 

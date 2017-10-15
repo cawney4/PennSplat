@@ -134,6 +134,7 @@ public class GameManager : Singleton<GameManager> {
 			score = (int)distance;
 
 			if (player.transform.position != lastPosition) {
+                Debug.Log("position changed");
 				playerPositions.Add (player.transform.position);
 			}
 
@@ -195,7 +196,7 @@ public class GameManager : Singleton<GameManager> {
 			countingTime = false;
 			Camera c = player.GetComponentInChildren<Camera> ();
 			if (!hasScreenShot) {
-				Application.CaptureScreenshot ("Assets/Resources/result.png");
+				ScreenCapture.CaptureScreenshot ("Assets/Resources/result.png");
 				hasScreenShot = true;
 			}
 			screenshot.readTexture ("result");
