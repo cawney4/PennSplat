@@ -26,6 +26,7 @@ public class TrailRender : MonoBehaviour {
 		line.SetVertexCount (positions.Count);
 		line.SetPositions (pos);
 		line.SetColors (new Color (1, 0, 0), new Color (1, 0, 0));
+		line.material.color = new Color (1, 0, 0);
 		line.SetWidth (1, 1);
 
 	}

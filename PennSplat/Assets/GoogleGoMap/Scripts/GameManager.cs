@@ -15,8 +15,12 @@ public class GameManager : Singleton<GameManager> {
 	public GeoPoint playerGeoPosition;
 	public PlayerLocationService player_loc;
 
+	public int score;
+	public ScreenShotHandler screenshot;
+	public bool hasScreenShot;
 
 	public Vector3 lastPosition;
+	public List<Vector3> playerPositions;
 	public float distance;
 
 	public Text trueHeadingText;
@@ -25,6 +29,8 @@ public class GameManager : Singleton<GameManager> {
 
 	public float time;
 	public float timeLeft;
+	public bool countingTime;
+
 
 	public enum PlayerStatus { TiedToDevice, FreeFromDevice }
 
@@ -35,7 +41,7 @@ public class GameManager : Singleton<GameManager> {
 		set { _playerStatus = value; }
 	}
 
-	public override void Awake (){
+	void Awake (){
 
 		Time.timeScale = 1;
 		playerStatus = PlayerStatus.TiedToDevice;
@@ -80,12 +86,20 @@ public class GameManager : Singleton<GameManager> {
 		}
 
 		lastPosition = player.transform.position;
+
+		playerPositions = new List<Vector3> ();
+		playerPositions.Add (lastPosition);
+
 		distance = 0.0f;
-		timeLeft = 600.0f;
+		timeLeft = 10.0f;
 		time = 0.0f;
 		trueHeadingText.text = "";
 		distanceText.text = "";
 		//timeLeftText.text = "10 min 00 s";
+		countingTime = true;
+
+		score = 0;
+		hasScreenShot = false;
 
     }
 
@@ -114,17 +128,24 @@ public class GameManager : Singleton<GameManager> {
 		player.transform.localEulerAngles = controllerRotation;
 
 
-		// Calculate the distance
-		float dis = Vector3.Distance(player.transform.position, lastPosition);
-		distance += dis;
-		lastPosition = player.transform.position;
-		distanceText.text = distance.ToString();
+		StopGame ();
+		if (countingTime) {
+			time += Time.deltaTime;
+			score = (int)distance;
 
-		time += Time.deltaTime;
+			if (player.transform.position != lastPosition) {
+				playerPositions.Add (player.transform.position);
+			}
+
+			float dis = Vector3.Distance(player.transform.position, lastPosition);
+			distance += dis;
+			lastPosition = player.transform.position;
+			distanceText.text = distance.ToString();
+		}
 
 		//timeLeftText.text = (timeLeft - time).ToString () + "s";
 
-        /*
+
 		var tileCenterMercator = getMainMapMap ().tileCenterMercator (playerGeoPosition);
 		if(!getMainMapMap ().centerMercator.isEqual(tileCenterMercator)) {
 
@@ -152,7 +173,6 @@ public class GameManager : Singleton<GameManager> {
 			newMap.GetComponent<MeshRenderer>().enabled = false;
 			newMap.SetActive(false);
 		}
-        */
 	}
 
 	public Vector3 ScreenPointToMapPosition(Vector2 point){
@@ -169,4 +189,16 @@ public class GameManager : Singleton<GameManager> {
 		return location;
 	}
 
+
+	public void StopGame() {
+		if (timeLeft - time <= 0.0f + 0.000001f) {
+			countingTime = false;
+			Camera c = player.GetComponentInChildren<Camera> ();
+			if (!hasScreenShot) {
+				Application.CaptureScreenshot ("Assets/Resources/result.png");
+				hasScreenShot = true;
+			}
+			screenshot.readTexture ("result");
+		}
+	}
 }
