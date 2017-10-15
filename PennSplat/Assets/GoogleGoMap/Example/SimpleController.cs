@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
+using UnityEngine.Networking;
 
-public class SimpleController : MonoBehaviour
+public class SimpleController : NetworkBehaviour
 {
 	public float speed = 6.0F;
 	public float gravity = 20.0F;
@@ -15,9 +16,13 @@ public class SimpleController : MonoBehaviour
 
 	void Update() 
 	{
-		
-		// Use input up and down for direction, multiplied by speed
-		moveDirection = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
+        if (!isLocalPlayer)
+        {
+            return;
+        }
+
+        // Use input up and down for direction, multiplied by speed
+        moveDirection = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
 		moveDirection = transform.TransformDirection(moveDirection);
 		moveDirection *= speed;
 
