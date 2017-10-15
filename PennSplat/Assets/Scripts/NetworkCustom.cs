@@ -6,6 +6,9 @@ public class NetworkCustom : NetworkManager
 {
 
     public GameObject[] characters;
+
+    public Material mat;
+
     private int group1 = 0;
     private int group2 = 0;
 
@@ -32,6 +35,7 @@ public class NetworkCustom : NetworkManager
         {
             Debug.Log("Add orange");
             player = Instantiate(characters[1], new Vector3(10, 0, 0), Quaternion.identity) as GameObject;
+            player.GetComponent<Renderer>().material = new Material(mat);//.color = Color.blue;
             player.GetComponent<Renderer>().material.color = Color.blue;
             group2 = group2 + 1;
         }
@@ -39,6 +43,7 @@ public class NetworkCustom : NetworkManager
         {
             Debug.Log("Add purple");
             player = Instantiate(characters[0], Vector3.zero, Quaternion.identity) as GameObject;
+            player.GetComponent<Renderer>().material = new Material(mat);
             group1 = group1 + 1;
 
         }
