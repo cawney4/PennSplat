@@ -1,16 +1,19 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEditor;
+using UnityEngine.UI;
 
 public class ScreenShotHandler : MonoBehaviour{
 	public Texture2D text;
 	public int score;
+	public Text scoreText;
 
 
 	// Use this for initialization
 	void Start () {
 		score = 0;
 		text = null;
+		scoreText.text = "0";
 	}
 
 	public void calResult() {
@@ -43,6 +46,8 @@ public class ScreenShotHandler : MonoBehaviour{
 				score = score + 1;
 			}
 		}
+
+		scoreText.text = score.ToString ();
 	}
 
 	public void readTexture(string path) {
