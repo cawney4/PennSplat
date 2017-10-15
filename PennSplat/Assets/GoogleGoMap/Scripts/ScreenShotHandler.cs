@@ -7,13 +7,14 @@ public class ScreenShotHandler : MonoBehaviour{
 	public Texture2D text;
 	public int score;
 	public Text scoreText;
-
+    public GameObject player;
 
 	// Use this for initialization
 	void Start () {
 		score = 0;
 		text = null;
 		scoreText.text = "0";
+        player = (GameObject)FindObjectOfType(typeof(CharacterController));
 	}
 
 	public void calResult() {
@@ -40,13 +41,14 @@ public class ScreenShotHandler : MonoBehaviour{
 				pix [i * y + j] = tmpTexture.GetPixel (i, j);
 			}
 		}
-
+        Color color = player.GetComponent<Renderer>().material.color;
 		for (int i = 0; i < pix.Length; i++) {
-			if (pix[i].r > 0.99 && pix[i].g < 0.01 && pix[i].b < 0.01) {
+			if (Mathf.Approximately(pix[i].r, color.r) && Mathf.Approximately(pix[i].g, color.g) && Mathf.Approximately(pix[i].b, color.b)) {
 				score = score + 1;
 			}
 		}
 
+        scoreText.color = color;
 		scoreText.text = score.ToString ();
 	}
 
