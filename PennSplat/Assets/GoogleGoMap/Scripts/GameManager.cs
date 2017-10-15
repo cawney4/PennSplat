@@ -18,10 +18,13 @@ public class GameManager : Singleton<GameManager> {
 
 	public Vector3 lastPosition;
 	public float distance;
+
 	public Text trueHeadingText;
 	public Text distanceText;
+	//public Text timeLeftText;
 
 	public float time;
+	public float timeLeft;
 
 	public enum PlayerStatus { TiedToDevice, FreeFromDevice }
 
@@ -78,9 +81,11 @@ public class GameManager : Singleton<GameManager> {
 
 		lastPosition = player.transform.position;
 		distance = 0.0f;
+		timeLeft = 600.0f;
 		time = 0.0f;
 		trueHeadingText.text = "";
 		distanceText.text = "";
+		//timeLeftText.text = "10 min 00 s";
 
     }
 
@@ -105,8 +110,9 @@ public class GameManager : Singleton<GameManager> {
 		// Rotate the charactor direction
 		float playerDirection = player_loc.trueHeading;
 		trueHeadingText.text = playerDirection.ToString();
-		Vector3 controllerRotation = new Vector3 (Mathf.Cos (playerDirection * Mathf.PI / 180.0f), 1, Mathf.Sin (playerDirection * Mathf.PI / 180.0f));
-		player.transform.rotation = Quaternion.Euler (controllerRotation);
+		Vector3 controllerRotation = new Vector3 (0.0f, playerDirection, 0.0f);
+		player.transform.localEulerAngles = controllerRotation;
+
 
 		// Calculate the distance
 		float dis = Vector3.Distance(player.transform.position, lastPosition);
@@ -115,6 +121,9 @@ public class GameManager : Singleton<GameManager> {
 		distanceText.text = distance.ToString();
 
 		time += Time.deltaTime;
+
+		//timeLeftText.text = (timeLeft - time).ToString () + "s";
+
 
 		var tileCenterMercator = getMainMapMap ().tileCenterMercator (playerGeoPosition);
 		if(!getMainMapMap ().centerMercator.isEqual(tileCenterMercator)) {
