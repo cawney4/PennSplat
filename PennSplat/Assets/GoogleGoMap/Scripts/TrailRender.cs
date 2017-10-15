@@ -14,6 +14,7 @@ public class TrailRender : MonoBehaviour {
 		positions = new List<Vector3> ();
 	}
 	
+    /*
 	// Update is called once per frame
 	void Update () {
 		positions = game.playerPositions;
@@ -28,4 +29,5 @@ public class TrailRender : MonoBehaviour {
 		line.SetWidth (1, 1);
 
 	}
+    */
 }
