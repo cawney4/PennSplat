@@ -35,7 +35,7 @@ public class GameManager : Singleton<GameManager> {
 		set { _playerStatus = value; }
 	}
 
-	void Awake (){
+	public override void Awake (){
 
 		Time.timeScale = 1;
 		playerStatus = PlayerStatus.TiedToDevice;
@@ -124,7 +124,7 @@ public class GameManager : Singleton<GameManager> {
 
 		//timeLeftText.text = (timeLeft - time).ToString () + "s";
 
-
+        /*
 		var tileCenterMercator = getMainMapMap ().tileCenterMercator (playerGeoPosition);
 		if(!getMainMapMap ().centerMercator.isEqual(tileCenterMercator)) {
 
@@ -152,6 +152,7 @@ public class GameManager : Singleton<GameManager> {
 			newMap.GetComponent<MeshRenderer>().enabled = false;
 			newMap.SetActive(false);
 		}
+        */
 	}
 
 	public Vector3 ScreenPointToMapPosition(Vector2 point){
