@@ -5,19 +5,19 @@ using System.Collections.Generic;
 public class TrailRender : MonoBehaviour {
 
 	public LineRenderer line;
-	public GameManager game;
+	public SimpleController character;
 
 	public List<Vector3> positions;
 
 	// Use this for initialization
 	void Start () {
+		
 		positions = new List<Vector3> ();
 	}
 	
-    /*
 	// Update is called once per frame
 	void Update () {
-		positions = game.playerPositions;
+		positions = character.positions;
 		Vector3[] pos = new Vector3[positions.Count];
 		for (int i = 0; i < positions.Count; i++) {
 			pos [i] = new Vector3 (positions [i].x, 1, positions [i].z);
@@ -30,5 +30,4 @@ public class TrailRender : MonoBehaviour {
 		line.SetWidth (1, 1);
 
 	}
-    */
 }
