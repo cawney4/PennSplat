@@ -20,15 +20,13 @@ public class GameManager : Singleton<GameManager> {
 	public bool hasScreenShot;
 
 	public Vector3 lastPosition;
-	//public List<Vector3> playerPositions;
 	public float distance;
 
-	public Text trueHeadingText;
+	public Text timeLeftText;
 	public Text distanceText;
-	//public Text timeLeftText;
 
 	public float time;
-	public float timeLeft;
+	public float timeTotal;
 	public bool countingTime;
 
 
@@ -87,15 +85,11 @@ public class GameManager : Singleton<GameManager> {
 
 		lastPosition = player.transform.position;
 
-		//playerPositions = new List<Vector3> ();
-		//playerPositions.Add (lastPosition);
-
 		distance = 0.0f;
-		timeLeft = 20.0f;
+		timeTotal = 20.0f;
 		time = 0.0f;
-		trueHeadingText.text = "";
+		timeLeftText.text = timeTotal.ToString();
 		distanceText.text = "";
-		//timeLeftText.text = "10 min 00 s";
 		countingTime = true;
 
 		score = 0;
@@ -109,6 +103,8 @@ public class GameManager : Singleton<GameManager> {
 			//TODO: Show location service is not enabled error. 
 			return;
 		}
+        StopGame();
+        if (countingTime) return;
 
 		// playerGeoPosition = getMainMapMap ().getPositionOnMap(new Vector2(player.transform.position.x, player.transform.position.z));
 		playerGeoPosition = new GeoPoint();
@@ -123,30 +119,19 @@ public class GameManager : Singleton<GameManager> {
 
 		// Rotate the charactor direction
 		float playerDirection = player_loc.trueHeading;
-		trueHeadingText.text = playerDirection.ToString();
 		Vector3 controllerRotation = new Vector3 (0.0f, playerDirection, 0.0f);
 		player.transform.localEulerAngles = controllerRotation;
 
 
-		StopGame ();
-		if (countingTime) {
-			time += Time.deltaTime;
-			score = (int)distance;
+		time += Time.deltaTime;
+		score = (int)distance;
 
-			/*
-			if (player.transform.position != lastPosition) {
-                Debug.Log("position changed");
-				playerPositions.Add (player.transform.position);
-			}
-			*/
+		float dis = Vector3.Distance(player.transform.position, lastPosition);
+		distance += dis;
+		lastPosition = player.transform.position;
+		distanceText.text = distance.ToString();
 
-			float dis = Vector3.Distance(player.transform.position, lastPosition);
-			distance += dis;
-			lastPosition = player.transform.position;
-			distanceText.text = distance.ToString();
-		}
-
-		//timeLeftText.text = (timeLeft - time).ToString () + "s";
+		timeLeftText.text = (timeTotal - time).ToString () + "s";
 
 
 		var tileCenterMercator = getMainMapMap ().tileCenterMercator (playerGeoPosition);
@@ -194,7 +179,7 @@ public class GameManager : Singleton<GameManager> {
 
 
 	public void StopGame() {
-		if (timeLeft - time <= 0.0f + 0.000001f) {
+		if (timeTotal - time <= 0.0f + 0.000001f) {
 			countingTime = false;
 			Camera c = player.GetComponentInChildren<Camera> ();
 			if (!hasScreenShot) {
