@@ -103,36 +103,43 @@ public class GameManager : Singleton<GameManager> {
 			//TODO: Show location service is not enabled error. 
 			return;
 		}
+
         StopGame();
-        if (countingTime) return;
 
-		// playerGeoPosition = getMainMapMap ().getPositionOnMap(new Vector2(player.transform.position.x, player.transform.position.z));
-		playerGeoPosition = new GeoPoint();
-		// GeoPoint playerGeoPosition = getMainMapMap ().getPositionOnMap(new Vector2(player.transform.position.x, player.transform.position.z));
-		if (playerStatus == PlayerStatus.TiedToDevice) {
-			playerGeoPosition = player_loc.loc;
-			player.GetComponent<ObjectPosition> ().setPositionOnMap (playerGeoPosition);
-		} else if (playerStatus == PlayerStatus.FreeFromDevice){
-			playerGeoPosition = getMainMapMap ().getPositionOnMap(new Vector2(player.transform.position.x, player.transform.position.z));
-		}
+        if (countingTime)
+        {
+
+            // playerGeoPosition = getMainMapMap ().getPositionOnMap(new Vector2(player.transform.position.x, player.transform.position.z));
+            playerGeoPosition = new GeoPoint();
+            // GeoPoint playerGeoPosition = getMainMapMap ().getPositionOnMap(new Vector2(player.transform.position.x, player.transform.position.z));
+            if (playerStatus == PlayerStatus.TiedToDevice)
+            {
+                playerGeoPosition = player_loc.loc;
+                player.GetComponent<ObjectPosition>().setPositionOnMap(playerGeoPosition);
+            }
+            else if (playerStatus == PlayerStatus.FreeFromDevice)
+            {
+                playerGeoPosition = getMainMapMap().getPositionOnMap(new Vector2(player.transform.position.x, player.transform.position.z));
+            }
 
 
-		// Rotate the charactor direction
-		float playerDirection = player_loc.trueHeading;
-		Vector3 controllerRotation = new Vector3 (0.0f, playerDirection, 0.0f);
-		player.transform.localEulerAngles = controllerRotation;
+            // Rotate the charactor direction
+            float playerDirection = player_loc.trueHeading;
+            Vector3 controllerRotation = new Vector3(0.0f, playerDirection, 0.0f);
+            player.transform.localEulerAngles = controllerRotation;
 
 
-		time += Time.deltaTime;
-		score = (int)distance;
+            time += Time.deltaTime;
+            score = (int)distance;
 
-		float dis = Vector3.Distance(player.transform.position, lastPosition);
-		distance += dis;
-		lastPosition = player.transform.position;
-		distanceText.text = distance.ToString();
+            float dis = Vector3.Distance(player.transform.position, lastPosition);
+            distance += dis;
+            lastPosition = player.transform.position;
+            distanceText.text = distance.ToString();
 
-		timeLeftText.text = (timeTotal - time).ToString () + "s";
+            timeLeftText.text = ((int)(timeTotal - time)).ToString() + "s";
 
+        }
 
 		var tileCenterMercator = getMainMapMap ().tileCenterMercator (playerGeoPosition);
 		if(!getMainMapMap ().centerMercator.isEqual(tileCenterMercator)) {

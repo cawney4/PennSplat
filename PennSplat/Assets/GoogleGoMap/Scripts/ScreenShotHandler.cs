@@ -51,7 +51,7 @@ public class ScreenShotHandler : MonoBehaviour{
 		}
 
         scoreText.color = color;
-        score = score / size * 100;
+        score = (int)(score / (float)size * 100);
 		scoreText.text = score.ToString ();
 	}
 
