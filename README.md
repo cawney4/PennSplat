@@ -24,5 +24,7 @@ We had problems accessing the GPS coordinates of the device while also using Uni
 
 We also had a hard time spawning players of different colors. The Network Manager only accepts one player character prefab which it spawns for all players. Online solutions say to create a custom Network Manager script that can accept multiple prefabs. We tried that, but it does not work. In fact, our character generation code is never executed for an unknown reason.
 
+The trail renderer will sometimes disappear, but moving around some more will cause it to come back.
+
 Resources:  
 GPS Location Service: Google Go Maps - https://www.assetstore.unity3d.com/en/#!/content/78642  
