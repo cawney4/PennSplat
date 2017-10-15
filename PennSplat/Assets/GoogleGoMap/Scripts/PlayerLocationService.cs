@@ -36,6 +36,7 @@ public class PlayerLocationService : MonoBehaviour {
 
 		// Start service before querying location
 		Input.location.Start();
+		Input.compass.enabled = true;
 		// Wait until service initializes
 		while (Input.location.status == LocationServiceStatus.Initializing && maxWait > 0)
 		{
